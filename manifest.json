@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
     "name": "xyhelper-login",
-    "version": "1.0",
-    "description": "Help to get gpt refreshToken.",
+    "version": "1.2",
+    "description": "Help to get chatgpt login info, including accessToken, refreshToken, and other info.",
     "icons": {
         "16": "images/favicon-16x16.png",
         "32": "images/favicon-32x32.png",
@@ -24,7 +24,8 @@
         "notifications"
     ],
     "host_permissions": [
-        "https://auth0.openai.com/*"
+        "https://auth0.openai.com/*",
+        "https://auth.openai.com/*"
     ],
     "action": {
         "default_title": "XYHELPER-GPT"

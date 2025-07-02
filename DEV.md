@@ -1,0 +1,1 @@
+zip -r -FS ../xyhelper-firefox-login.zip * --exclude '*.git*'
