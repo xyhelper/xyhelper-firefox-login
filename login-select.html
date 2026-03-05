@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录类型选择</title>
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #6c63ff;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --background-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --card-background: rgba(255, 255, 255, 0.95);
+            --text-primary: #333;
+            --text-secondary: #666;
+            --border-radius: 16px;
+            --shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 15px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 380px;
+            min-height: 500px;
+            background: var(--background-gradient);
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        .container {
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+            width: 100%;
+            max-width: 340px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .container:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-2px);
+        }
+
+        .header {
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            width: 64px;
+            height: 64px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+        }
+
+        .title {
+            color: var(--text-primary);
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .buttons-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .mode-button {
+            padding: 16px 20px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            min-height: 56px;
+        }
+
+        .mode-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .mode-button:hover::before {
+            left: 100%;
+        }
+
+        .btn-auth0 {
+            background: linear-gradient(135deg, var(--primary-color), #5ba3f5);
+            color: white;
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+        }
+
+        .btn-auth0:hover {
+            background: linear-gradient(135deg, #3a7ac8, #4a90e2);
+            box-shadow: 0 8px 25px rgba(74, 144, 226, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-auth {
+            background: linear-gradient(135deg, var(--secondary-color), #8b7cff);
+            color: white;
+            box-shadow: 0 4px 15px rgba(108, 99, 255, 0.3);
+        }
+
+        .btn-auth:hover {
+            background: linear-gradient(135deg, #5a52e0, #6c63ff);
+            box-shadow: 0 8px 25px rgba(108, 99, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .mode-button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .icon {
+            font-size: 20px;
+        }
+
+        .description {
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.4;
+            margin-top: 20px;
+            padding: 12px;
+            background: rgba(108, 99, 255, 0.05);
+            border-radius: 8px;
+            border-left: 3px solid var(--secondary-color);
+        }
+
+        .loading {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: var(--border-radius);
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">XY</div>
+            <div class="title">登录类型选择</div>
+            <div class="subtitle">请选择您的登录类型（GPT 或 SORA）</div>
+        </div>
+
+        <div class="buttons-container">
+            <button class="mode-button btn-auth0" id="mode-gpt">
+                <span class="icon">🔐</span>
+                <div>
+                    <div>GPT 类型</div>
+                    <div style="font-size: 12px; opacity: 0.8;">常规登录流程，适用于 ChatGPT</div>
+                </div>
+            </button>
+
+            <button class="mode-button btn-auth" id="mode-sora">
+                <span class="icon">⚡</span>
+                <div>
+                    <div>SORA 类型</div>
+                    <div style="font-size: 12px; opacity: 0.8;">用于 SORA 相关流程的登录</div>
+                </div>
+            </button>
+        </div>
+
+        <div class="description">
+            选择对应的登录类型开始获取您的访问令牌
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <div class="loading-text">正在请求登录链接...</div>
+        </div>
+    </div>
+
+    <script src="login-select.js"></script>
+</body>
+</html> 

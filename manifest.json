@@ -1,20 +1,7 @@
 {
     "manifest_version": 3,
     "name": "xyhelper-login",
-    "version": "1.2",
-    "description": "Help to get chatgpt login info, including accessToken, refreshToken, and other info.",
-    "icons": {
-        "16": "images/favicon-16x16.png",
-        "32": "images/favicon-32x32.png",
-        "48": "images/favicon-32x32.png",
-        "128": "images/apple-touch-icon.png"
-    },
-    "background": {
-        "scripts": [
-            "background.js"
-        ],
-        "type": "module"
-    },
+    "version": "2.1",
     "permissions": [
         "tabs",
         "webRequest",
@@ -25,14 +12,59 @@
     ],
     "host_permissions": [
         "https://auth0.openai.com/*",
-        "https://auth.openai.com/*"
+        "https://auth.openai.com/*",
+        "https://public.xyhelper.cn/*",
+        "http://127.0.0.1:8080/*"
     ],
     "action": {
-        "default_title": "XYHELPER-GPT"
+        "default_title": "XYHELPER-GPT",
+        "default_popup": "login-select.html"
+    },
+    "background": {
+        "scripts": [
+            "background.js"
+        ],
+        "type": "module"
+    },
+    "options_ui": {
+        "page": "options.html",
+        "open_in_tab": false
     },
     "browser_specific_settings": {
         "gecko": {
-            "id": "gcslaoli@gmail.com"
+            "id": "xyhelper-login@xyhelper.cn",
+            "strict_min_version": "91.0"
         }
-    }
+    },
+    "icons": {
+        "16": "images/favicon-16x16.png",
+        "32": "images/favicon-32x32.png",
+        "48": "images/favicon-32x32.png",
+        "128": "images/apple-touch-icon.png"
+    },
+    "content_scripts": [
+        {
+        "matches": [
+            "https://auth.openai.com/*"
+        ],
+        "js": [
+            "scripts/content_script.js"
+        ],
+        "run_at": "document_start"
+        }
+    ],
+    "web_accessible_resources": [
+        {
+        "resources": [
+            "scripts/injected_script.js"
+        ],
+        "matches": [
+            "https://auth.openai.com/*"
+        ]
+        }
+    ]
+    
+    
+    
+    
 }
